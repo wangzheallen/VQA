@@ -408,7 +408,7 @@ def train():
 
 		tStop = time.time()
 		if np.mod(itr, 100) == 0:
-			print ("Iteration: ", itr, " Loss: ", loss, " Learning Rate: ", lr.eval())
+			print ("Iteration: ", itr, " Loss: ", loss, " Learning Rate: ", lr_global.eval())
 			f1.write(str(itr) + '\t' + str(loss) + "\n")
 			#print ("Iteration: ", itr, " scores: ", scores, " label: ", current_target)
 			print ("Time Cost:", round(tStop - tStart,2), "s")
