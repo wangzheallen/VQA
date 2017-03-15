@@ -345,7 +345,7 @@ def train():
 		dim_hidden = dim_hidden,
 		max_words_q = max_words_q,
 		vocabulary_size = vocabulary_size,
-		drop_out_rate = 0.5,
+		drop_out_rate = 0,
 		emb_matrix = train_data['emb_matrix'])
 
 	tf_loss, tf_image, tf_question, tf_answer, tf_label = model.build_model()
