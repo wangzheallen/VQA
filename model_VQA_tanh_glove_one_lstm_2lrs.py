@@ -363,7 +363,8 @@ def train():
 	opt_nlp = tf.train.AdamOptimizer(learning_rate = lr_nlp)
 
 	# gradient clipping
-	gvs = opt.compute_gradients(tf_loss, nlp_vars + global_vars)
+	#gvs = opt.compute_gradients(tf_loss, nlp_vars + global_vars)
+	gvs = tf.gradients(tf_loss, nlp_vars + global_vars)
 	gvs_nlp = [gvs[0]]
 	gvs_global = gvs[1:]
 	#clipped_gvs = [(tf.clip_by_value(grad, -500.0, 500.0), var) for grad, var in gvs]  ## either 100 or 10000 will result in Nan, original is 100
