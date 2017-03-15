@@ -89,7 +89,7 @@ class Answer_Generator():
         #state_ans = output[-1][250:,:]
 
         output, state_fw, state_bw = tf.nn.bidirectional_rnn(self.forward_dropout, self.backward_dropout, inputs, dtype=tf.float32)
-        state = tf.concat([state_fw, state_bw], 1)
+        state = tf.concat(1,[state_fw, state_bw])
         state_que = state[0:250,:]
         state_ans = state[250:,:]
 
@@ -160,7 +160,7 @@ class Answer_Generator():
         #state_ans = output[-1][250:,:]
 
         output, state_fw, state_bw = tf.nn.bidirectional_rnn(self.forward_dropout, self.backward_dropout, inputs, dtype=tf.float32)
-        state = tf.concat([state_fw, state_bw], 1)
+        state = tf.concat(1,[state_fw, state_bw])
         state_que = state[0:250,:]
         state_ans = state[250:,:]
         '''
