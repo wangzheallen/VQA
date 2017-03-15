@@ -175,12 +175,13 @@ class Answer_Generator():
 #####################################################
 print('Loading parameters ...')
 # Data input setting
-input_img_h5 = './data_img_resnet.h5'
-input_ques_h5 = './data_prepro.h5'
-input_json = './data_prepro.json'
+input_img_h5 = './data_img_resnet_wikiGlove.h5'
+input_ques_h5 = './data_prepro_wikiGlove.h5'
+input_json = './data_prepro_wikiGlove.json'
 
 # Train Parameters setting
-learning_rate = 0.0003			# learning rate for rmsprop
+learning_rate_global = 0.0003			# learning rate for rmsprop
+learning_rate_nlp = 0.00075
 #starter_learning_rate = 3e-4
 learning_rate_decay_start = -1		# at what iteration to start decaying learning rate? (-1 = dont)
 batch_size = 500			# batch_size for each iterations
@@ -354,13 +355,21 @@ def train():
 	saver = tf.train.Saver(max_to_keep=100)
 
 	tvars = tf.trainable_variables()
-	lr = tf.Variable(learning_rate)
-	opt = tf.train.AdamOptimizer(learning_rate=lr)
+	nlp_vars = [tvars[0]]
+	global_vars = tvars[1:]
+	lr_global = tf.Variable(learning_rate_global)
+	lr_nlp = tf.Variable(learning_rate_nlp)
+	opt_global = tf.train.AdamOptimizer(learning_rate=lr_global)
+	opt_nlp = tf.train.AdamOptimizer(learning_rate = lr_nlp)
 
 	# gradient clipping
-	gvs = opt.compute_gradients(tf_loss,tvars)
-	clipped_gvs = [(tf.clip_by_value(grad, -500.0, 500.0), var) for grad, var in gvs]  ## either 100 or 10000 will result in Nan, original is 100
-	train_op = opt.apply_gradients(clipped_gvs)
+	gvs = opt.compute_gradients(tf_loss, nlp_vars + global_vars)
+	gvs_nlp = [gvs[0]]
+	gvs_global = gvs[1:]
+	#clipped_gvs = [(tf.clip_by_value(grad, -500.0, 500.0), var) for grad, var in gvs]  ## either 100 or 10000 will result in Nan, original is 100
+	train_op_nlp = opt_nlp.apply_gradients(zip(gvs_nlp, nlp_vars))
+	train_op_global = opt_global.apply_gradients(zip(gvs_global, global_vars))
+	train_op = tf.group(train_op_nlp, train_op_global)
 
 	tf.initialize_all_variables().run()
 
@@ -390,8 +399,11 @@ def train():
 						tf_label: current_target
 						})
 
-		current_learning_rate = lr*decay_factor
-		lr.assign(current_learning_rate).eval()
+		current_learning_rate_global = lr_global*decay_factor
+		current_learning_rate_nlp = lr_nlp*decay_factor
+		lr_global.assign(current_learning_rate_global).eval()
+		lr_nlp.assign(current_learning_rate_nlp).eval()
+		#lr.assign(current_learning_rate).eval()
 
 		tStop = time.time()
 		if np.mod(itr, 100) == 0:
