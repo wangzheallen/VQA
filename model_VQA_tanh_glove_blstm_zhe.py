@@ -49,11 +49,11 @@ class Answer_Generator():
 
 
         # question-embedding W1
-        self.embed_Q_W = tf.Variable(tf.random_uniform([rnn_size*rnn_layer, self.dim_hidden], -0.08,0.08),name='embed_Q_W')
+        self.embed_Q_W = tf.Variable(tf.random_uniform([2*rnn_size*rnn_layer, self.dim_hidden], -0.08,0.08),name='embed_Q_W')
         self.embed_Q_b = tf.Variable(tf.random_uniform([self.dim_hidden], -0.08, 0.08), name='embed_Q_b')
 
         # Answer-embedding W3
-        self.embed_A_W = tf.Variable(tf.random_uniform([rnn_size*rnn_layer, self.dim_hidden], -0.08,0.08),name='embed_A_W')
+        self.embed_A_W = tf.Variable(tf.random_uniform([2*rnn_size*rnn_layer, self.dim_hidden], -0.08,0.08),name='embed_A_W')
         self.embed_A_b = tf.Variable(tf.random_uniform([self.dim_hidden], -0.08, 0.08), name='embed_A_b')
 
         # image-embedding W2
