@@ -122,7 +122,7 @@ class Answer_Generator():
         QI_linear = tf.nn.xw_plus_b(QI_drop, self.embed_QI_W, self.embed_QI_b)
         QI_emb = tf.tanh(QI_linear)
 
-        QIA = tf.mul(QI_emb, A_emb_BN)
+        QIA = tf.mul(QI_emb, A_emb)
 
         #QIA_BN = tf.contrib.layers.batch_norm(QIA, decay=self.decay, is_training = is_training, scope = 'QIA_BN')
 
@@ -187,7 +187,7 @@ class Answer_Generator():
         QI_linear = tf.nn.xw_plus_b(QI_drop, self.embed_QI_W, self.embed_QI_b)
         QI_emb = tf.tanh(QI_linear)
 
-        QIA = tf.mul(QI_emb, A_emb_BN)
+        QIA = tf.mul(QI_emb, A_emb)
 
         #QIA_BN = tf.contrib.layers.batch_norm(QIA, decay=self.decay, is_training = is_training, scope = 'QIA_BN', reuse = True)
 

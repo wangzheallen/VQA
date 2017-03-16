@@ -118,7 +118,7 @@ class Answer_Generator():
 
         #QI_BN = tf.contrib.layers.batch_norm(QI, decay=self.decay, is_training = is_training, scope = 'QI_BN')
 
-        QI_drop = tf.nn.dropout(QI_BN, 1-self.drop_out_rate)
+        QI_drop = tf.nn.dropout(QI, 1-self.drop_out_rate)
         QI_linear = tf.nn.xw_plus_b(QI_drop, self.embed_QI_W, self.embed_QI_b)
         QI_emb = tf.tanh(QI_linear)
 
@@ -183,7 +183,7 @@ class Answer_Generator():
 
         #QI_BN = tf.contrib.layers.batch_norm(QI, decay=self.decay, is_training = is_training, scope = 'QI_BN', reuse = True)
 
-        QI_drop = tf.nn.dropout(QI_BN, 1-self.drop_out_rate)
+        QI_drop = tf.nn.dropout(QI, 1-self.drop_out_rate)
         QI_linear = tf.nn.xw_plus_b(QI_drop, self.embed_QI_W, self.embed_QI_b)
         QI_emb = tf.tanh(QI_linear)
 
