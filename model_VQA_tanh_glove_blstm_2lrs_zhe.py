@@ -215,7 +215,7 @@ input_ques_h5 = './data_prepro_wikiGlove.h5'
 input_json = './data_prepro_wikiGlove.json'
 
 # Train Parameters setting
-learning_rate = 0.0003          # learning rate for rmsprop
+learning_rate_global = 0.0003          # learning rate for rmsprop
 learning_rate_nlp = 0.00075
 #starter_learning_rate = 3e-4
 learning_rate_decay_start = -1      # at what iteration to start decaying learning rate? (-1 = dont)
