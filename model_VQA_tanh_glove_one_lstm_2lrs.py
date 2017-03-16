@@ -184,7 +184,7 @@ learning_rate_global = 0.0003			# learning rate for rmsprop
 learning_rate_nlp = 0.00075
 #starter_learning_rate = 3e-4
 learning_rate_decay_start = -1		# at what iteration to start decaying learning rate? (-1 = dont)
-batch_size = 500			# batch_size for each iterations
+batch_size = 512			# batch_size for each iterations
 input_embedding_size = 300		# The encoding size of each token in the vocabulary
 rnn_size = 512				# size of the rnn in number of hidden nodes in each layer
 rnn_layer = 2				# number of the rnn layer
